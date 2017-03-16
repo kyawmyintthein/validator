@@ -20,20 +20,11 @@ func NewValidator(name string, messageTmpl string, fn ValidatorFunc) Validator {
     }
 }
 
-func (v *Validator) Validate(i interface{}, data map[string]interface{}) goerror.Error {
-    var err goerror.Error
+func (v *Validator) Validate(i interface{}, data map[string]interface{}) error {
+    var err  error
     if v.Fn(i) {
         tmpl := goerror.NewTemplate(v.Name, v.MessageTemplate)
         return tmpl.Error(data)
-    }
-    return err
-}
-
-func (v *Validator) ValidateDefaultError(i interface{}, data map[string]interface{}) error {
-    var err error
-    if v.Fn(i) {
-        tmpl := goerror.NewTemplate(v.Name, v.MessageTemplate)
-        return tmpl.DefaultError(data)
     }
     return err
 }
