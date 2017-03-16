@@ -1,5 +1,9 @@
 package validator
 
+import(
+    "github.com/kyawmyinthein/goerror"
+)
+
 type ValidatorFunc func(v interface{}) bool
 type Validator struct {
     Name            string
@@ -16,7 +20,7 @@ func NewValidator(name string, messageTmpl string, fn ValidatorFunc) Validator {
     }
 }
 
-func (v *Validator) Validate(i interface{}, data map[string]interface{}) ErrorString {
+func (v *Validator) Validate(i interface{}, data map[string]interface{}) goerror.Error {
     var err ErrorString
     if v.Fn(i) {
         tmpl := NewTemplate(v.Name, v.MessageTemplate)

@@ -1,4 +1,4 @@
-package errtmpl
+package validator
 
 import (
     "reflect"

@@ -1,5 +1,9 @@
 package validator
 
+import(
+    "github.com/kyawmyinthein/goerror"
+)
+
 const (
     RequiredDefaultErrorTemplate = "{{attr}} is required."
 )
@@ -9,7 +13,7 @@ const (
  * desc   : Validate empty or null value in golang type such as int, string, float, struct
  * return : Return custom error type TError
  */
-func Required(i interface{}, attr string) ErrorString {
+func Required(i interface{}, attr string) goerror.Error {
     requiredValidator := NewValidator("Required", RequiredDefaultErrorTemplate, func(v interface{}) bool {
         return isEmpty(v)
     })
@@ -46,7 +50,7 @@ func RequiredDefaultErrorWithTemplate(i interface{}, data map[string]interface{}
  * desc   : Validate empty or null value in golang type such as int, string, float, struct with custom *          message template
  * return : Return custom error type TError
  */
-func RequiredWithTemplate(i interface{}, data map[string]interface{}, tmpl errorTemplate) ErrorString {
+func RequiredWithTemplate(i interface{}, data map[string]interface{}, tmpl errorTemplate) goerror.Error {
     requiredValidator := NewValidator(tmpl.name, tmpl.layout, func(v interface{}) bool {
         return isEmpty(v)
     })
