@@ -1,11 +1,11 @@
 package validator
 
 import(
-    "github.com/kyawmyinthein/goerror"
+    "github.com/kyawmyintthein/goerror"
 )
 
 const (
-    RequiredDefaultErrorTemplate = "{{attr}} is required."
+    DEFAULT_REQUIRED_ERROR_MESSAGE_TEMPLATE = "{{attr}} is required."
 )
 
 /*
@@ -14,7 +14,7 @@ const (
  * return : Return custom error type TError
  */
 func Required(i interface{}, attr string) goerror.Error {
-    requiredValidator := NewValidator("Required", RequiredDefaultErrorTemplate, func(v interface{}) bool {
+    requiredValidator := NewValidator("Required", DEFAULT_REQUIRED_ERROR_MESSAGE_TEMPLATE, func(v interface{}) bool {
         return isEmpty(v)
     })
     data := map[string]interface{}{"attr": attr}
@@ -27,7 +27,7 @@ func Required(i interface{}, attr string) goerror.Error {
  * return : Return custom error type TError
  */
 func RequiredDefaultError(i interface{}, attr string) error {
-    requiredValidator := NewValidator("Required", RequiredDefaultErrorTemplate, func(v interface{}) bool {
+    requiredValidator := NewValidator("Required", DEFAULT_REQUIRED_ERROR_MESSAGE_TEMPLATE, func(v interface{}) bool {
         return isEmpty(v)
     })
 
@@ -40,8 +40,8 @@ func RequiredDefaultError(i interface{}, attr string) error {
  * desc   : Validate empty or null value in golang type such as int, string, float, struct
  * return : Return custom error type TError
  */
-func RequiredDefaultErrorWithTemplate(i interface{}, data map[string]interface{}, tmpl errorTemplate) error {
-    requiredValidator := NewValidator(tmpl.name, tmpl.layout, func(v interface{}) bool { return isEmpty(v) })
+func RequiredDefaultErrorWithTemplate(i interface{}, data map[string]interface{}, tmpl goerror.ErrorTemplate) error {
+    requiredValidator := NewValidator(tmpl.Name, tmpl.Layout, func(v interface{}) bool { return isEmpty(v) })
     return requiredValidator.ValidateDefaultError(i, data)
 }
 
@@ -50,8 +50,8 @@ func RequiredDefaultErrorWithTemplate(i interface{}, data map[string]interface{}
  * desc   : Validate empty or null value in golang type such as int, string, float, struct with custom *          message template
  * return : Return custom error type TError
  */
-func RequiredWithTemplate(i interface{}, data map[string]interface{}, tmpl errorTemplate) goerror.Error {
-    requiredValidator := NewValidator(tmpl.name, tmpl.layout, func(v interface{}) bool {
+func RequiredWithTemplate(i interface{}, data map[string]interface{}, tmpl goerror.ErrorTemplate) goerror.Error {
+    requiredValidator := NewValidator(tmpl.Name, tmpl.Layout, func(v interface{}) bool {
         return isEmpty(v)
     })
     return requiredValidator.Validate(i, data)

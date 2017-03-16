@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 import "validator"
+import "github.com/kyawmyintthein/goerror"
 
 type Animal struct {
     Name string
@@ -10,11 +11,11 @@ type Animal struct {
 
 func main() {
     id := 0
-    err := errtmpl.Required(id, "user ID")
-    fmt.Println(reqErr.Error())
+    err := validator.Required(id, "user ID")
+    fmt.Println(err.Error())
 
     data := map[string]interface{}{"attr": "id", "value": id}
-    tmpl := validator.NewTemplate("ID required", "{{attr}} should no be blank. {{attr}} is {{value}}. Please check your data input.")
-    err = errtmpl.RequiredWithTemplate(id, cusdata, tmpl)
+    tmpl := goerror.NewTemplate("Required", "{{attr}} should no be blank. {{attr}} is {{value}}. Please check your data input.")
+    err = validator.RequiredWithTemplate(id, data, tmpl)
     fmt.Println(err.Error())
 }
